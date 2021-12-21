@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/tutor?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: andafw42
+    url: jdbc:mysql://8.136.81.210:3306/tutor?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: tutor
+    password: tutor
 
 # 日志配置
 logging:
