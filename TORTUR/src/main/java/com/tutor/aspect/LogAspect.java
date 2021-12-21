@@ -24,7 +24,7 @@ public class LogAspect {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //定义切面，申明log()是一个切面
-    @Pointcut("execution(* com.rjxy.abc.controller.*.*(..))")
+    @Pointcut("execution(* com.tutor.controller.*.*(..))")
     public void log() {}
 
     //在切面之前执行

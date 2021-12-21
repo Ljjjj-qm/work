@@ -20,15 +20,15 @@ public class Apprise implements Serializable {
 
     private Integer tutorId;
 
-    //评分1-5
+    // 评分1-5
     private Integer score;
 
-    //评价信息
+    // 评价信息
     private String content;
 
     private Date appriseTime;
 
-    //收到确认
+    // 收到确认
     private Integer received;
 
     private Integer completed;

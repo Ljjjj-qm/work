@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @program: abc
  * @description: 用户登录控制器
- * @author: ZhangQingMin
+ * @author: MaoShengTian
  * @create: 2021-04-01 22:10
  **/
 @Controller
@@ -35,7 +35,7 @@ public class LoginController {
 
     /**
      * @Description: 跳转登录页面
-     * @Auther: ZhangQingMin
+     * @Auther: MaoShengTian
      * @Date: 2021-04-01 22:10
      * @Param:
      * @Return: 返回登录页面
@@ -47,7 +47,7 @@ public class LoginController {
 
     /**
      * @Description: 登录校验
-     * @Auther: ZhangQingMin
+     * @Auther: MaoShengTian
      * @Date: 2021-04-01 22:10
      * @Param: username:用户名
      * @Param: password:密码
@@ -91,7 +91,7 @@ public class LoginController {
 
     /**
      * @Description: 注销
-     * @Auther: ZhangQingMin
+     * @Auther: MaoShengTian
      * @Date: 2021-04-01 22:10
      * @Param: session:session域
      * @Return: 返回登录页面
