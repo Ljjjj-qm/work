@@ -18,6 +18,7 @@ import java.util.Date;
 public class AppriseServiceImpl  extends ServiceImpl<AppriseMapper, Apprise> implements AppriseService {
 
 //    添加评价
+    @Override
     public void  setApprisefortutor(Integer  teacherId,Integer studentId,Apprise apprise){
         apprise.setTutorId(teacherId);
         apprise.setStudentId(studentId);
@@ -28,6 +29,7 @@ public class AppriseServiceImpl  extends ServiceImpl<AppriseMapper, Apprise> imp
     }
 
 //    查看自己评价信息
+    @Override
     public Apprise  selectAppriseByStudentId(Integer studentId){
        return baseMapper.selectOne(new QueryWrapper<Apprise>().eq("student_id",studentId));
 

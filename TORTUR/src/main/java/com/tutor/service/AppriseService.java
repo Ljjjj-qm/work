@@ -9,4 +9,10 @@ import com.tutor.entity.Apprise;
  * Time:21:29
  */
 public interface AppriseService extends IService<Apprise> {
+
+    //    添加评价
+    void  setApprisefortutor(Integer  teacherId,Integer studentId,Apprise apprise);
+
+    //    查看自己评价信息
+    Apprise  selectAppriseByStudentId(Integer studentId);
 }
