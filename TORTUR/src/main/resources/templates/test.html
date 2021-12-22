@@ -20,6 +20,27 @@
 <script src="../static/layui/lay-config.js" charset="utf-8" th:src="@{/layui/lay-config.js}"></script>
 
 <div th:text="${message}"></div>
+<div th:text="${message2}"></div>
 
+<form name="search" action="/admin/class_search" method="post" target="_blank">
+    <div class="ui icon inverted input">
+        <input type="text" name="query" placeholder="Search...." value="">
+        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+    </div>
+</form>
+
+<a href="#" th:href="@{/admin/class_delete/{id}(id=${5})}" >删除</a>
+<!--<a href="#" th:href="@{/admin/class_delete/{id}/delete(id=${type.id})}" >删除</a>-->
+
+
+
+<!-- 用于获取BindingResult中的错误信息-->
+<!--/*/
+<div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+    <i class="close icon"></i>
+    <div class="header">验证失败</div>
+    <p th:errors="*{name}"></p>
+</div>
+/*/-->
 </body>
 </html>

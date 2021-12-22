@@ -14,4 +14,6 @@ import java.util.List;
 public interface ClazzService extends IService<Clazz> {
 
     List<Clazz> getClazzListByPage(Integer pageNum, Integer pageSize);
+
+    List<Clazz> getClazzListByQuery(String query, Integer pageNum, Integer pageSize);
 }
