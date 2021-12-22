@@ -14,4 +14,4 @@ logging:
     root: info
     com.rjxy: debug
   file:
-#    name: log/blog-dev.log
+    name: log/blog-dev.log
