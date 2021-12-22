@@ -1,6 +1,5 @@
 package com.tutor.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tutor.entity.Clazz;
 import com.tutor.mapper.ClazzMapper;
 import com.tutor.service.ClazzService;
@@ -39,16 +38,13 @@ public class AdminController {
     public String getClassList(Model model,
                                @RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum) {
 
-        // 分页查询 pageNum : 当前页， size ：一页数据条数
-        Page<Clazz> clazzPage = new Page<>(pageNum, 10);
-        // queryWrapper 查询条件，这里查询所有数据，不用做条件查询
-        clazzPage = clazzMapper.selectPage(clazzPage, null);
+        // 调用Service层方法获取分页数据
+        List<Clazz> records = clazzService.getClazzListByPage(pageNum, 10);
 
-        // 获取记录
-        List<Clazz> records = clazzPage.getRecords();
-        for (Clazz clazz : records) {
-            System.out.println(clazz);
-        }
+        // 打印输出
+//        for (Clazz clazz : records) {
+//            System.out.println(clazz);
+//        }
 
         // 通过model将数据传送给前端
         model.addAttribute("message", records);
