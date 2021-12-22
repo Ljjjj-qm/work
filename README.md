@@ -13,7 +13,7 @@ Tutor
 2. 先进行pull操作，和远程同步
 
    ```bash
-   $ git pull
+   $ git pull origin dev
    ```
 
 3. 就可以在dev上做提交
