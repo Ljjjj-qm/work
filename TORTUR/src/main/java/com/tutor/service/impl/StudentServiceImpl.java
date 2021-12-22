@@ -19,17 +19,20 @@ import java.util.List;
 public class StudentServiceImpl  extends ServiceImpl<StudentMapper, Student> implements StudentService {
 
 //    添加学生
+    @Override
     public int  inserOneStudent(Student student){
 //         根据班级名称查询班级id  根据 辅导员姓名查询辅导员id
        return   baseMapper.insert(student);
     }
 
 //    删除学生
+    @Override
     public  int   deleteStudentById(Integer id){
         return  baseMapper.deleteById(id);
     }
 
 //    查询学生
+    @Override
     public  Student   selectStudent(Integer userId){
         QueryWrapper<Student> wrapper=new QueryWrapper<>();
         wrapper.eq("user_id",userId);
@@ -37,6 +40,7 @@ public class StudentServiceImpl  extends ServiceImpl<StudentMapper, Student> imp
     }
 
 //    修改学生
+    @Override
     public  int  updateStudent(Student student){
        return baseMapper.updateById(student);
     }

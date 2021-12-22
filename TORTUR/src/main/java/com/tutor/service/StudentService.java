@@ -12,4 +12,15 @@ import java.util.List;
  */
 public interface StudentService extends IService<Student> {
     List<Student> getStudentList(Integer padeNum, int pageSize);
+
+
+    //    修改学生
+    int  updateStudent(Student student);
+    //    添加学生
+    int  inserOneStudent(Student student);
+
+    //    删除学生
+    int   deleteStudentById(Integer id);
+    //    查询学生
+    Student   selectStudent(Integer userId);
 }
