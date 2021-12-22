@@ -8,13 +8,18 @@ import com.tutor.mapper.StudentMapper;
 import com.tutor.service.StudentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements StudentService {
+
     @Override
-    public Page<Student> listStuInfo(Integer current, Integer limit) {
-        Page<Student> page = new Page<>(current, limit);
+    public List<Student> getStudentList(Integer padeNum, int pageSize) {
+        Page<Student> page = new Page<>(padeNum, pageSize);
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
-        wrapper.orderByDesc("id");
-        return baseMapper.selectPage(page, wrapper);
+        wrapper.orderByAsc("id");
+        Page<Student> selectPage = baseMapper.selectPage(page, wrapper);
+        return selectPage.getRecords();
     }
+
 }

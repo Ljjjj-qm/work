@@ -1,8 +1,12 @@
 package com.tutor.controller;
 
 import com.tutor.entity.Clazz;
+import com.tutor.entity.Student;
+import com.tutor.entity.Teacher;
 import com.tutor.mapper.ClazzMapper;
 import com.tutor.service.ClazzService;
+import com.tutor.service.StudentService;
+import com.tutor.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +31,46 @@ public class AdminController {
     @Autowired
     private ClazzMapper clazzMapper;
 
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private TeacherService teacherService;
+
+    /**
+     * 获取学生分页列表
+     *
+     * @param model   数据传输对象
+     * @param padeNum 页码
+     * @return 页面链接
+     */
+    @RequestMapping("/student_list")
+    public String getStudentList(Model model, @RequestParam(defaultValue = "1", value = "padeNum") Integer padeNum) {
+        List<Student> students = studentService.getStudentList(padeNum, 10);
+        model.addAttribute("data", students);
+        return "test";
+    }
+
+    /**
+     * 获取老师分页列表
+     *
+     * @param model   数据传输对象
+     * @param padeNum 页码
+     * @return 页面链接
+     */
+    @RequestMapping("/teacher_list")
+    public String getTeacherList(Model model, @RequestParam(defaultValue = "1", value = "padeNum") Integer padeNum) {
+        List<Teacher> teacherList = teacherService.getTeacherList(padeNum, 10);
+        model.addAttribute("data", teacherList);
+        return "test";
+    }
+
     /**
      * 分页获取班级列表
-     * @param model model数据传输对象
+     *
+     * @param model   model数据传输对象
      * @param pageNum 页码
-     * @return
-     * 控制器链接还没填
+     * @return 控制器链接还没填
      */
     @RequestMapping("/class_list")
     public String getClassList(Model model,
