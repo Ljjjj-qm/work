@@ -2,10 +2,11 @@ package com.tutor.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.tutor.entity.Apprise;
 import com.tutor.entity.Clazz;
 import com.tutor.entity.Student;
 import com.tutor.entity.Teacher;
-import com.tutor.mapper.ClazzMapper;
+import com.tutor.service.AppriseService;
 import com.tutor.service.ClazzService;
 import com.tutor.service.StudentService;
 import com.tutor.service.TeacherService;
@@ -32,6 +33,8 @@ public class AdminController {
     @Autowired
     private ClazzService clazzService;
 
+    @Autowired
+    private AppriseService appriseService;
 
     @Autowired
     private StudentService studentService;
@@ -66,6 +69,9 @@ public class AdminController {
         model.addAttribute("data", teacherList);
         return "test";
     }
+
+
+    // ******************************************班级管理********************************
 
     /**
      *
@@ -230,6 +236,31 @@ public class AdminController {
         // 保存成功后，重定向到 /admin/class_list
         return "redirect:/admin/class_list";
     }
+
+
+    // ******************************************评价管理********************************
+
+    /**
+     * 分页获取评价信息
+     * @param model
+     * @param pageNum
+     * @return
+     */
+    @RequestMapping("/apprise_list")
+    public String getAppriseList(Model model,
+                               @RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum) {
+        // 调用Service层方法获取分页数据，pageNum : 分页页码, pageSize : 分页大小
+        List<Apprise> records = appriseService.getAppriseListByPage(pageNum, 10);
+        // 通过model将数据传送给前端
+        model.addAttribute("message", records);
+
+        /**
+         *  return 页面还未填写
+         */
+        return "apprise_test";
+    }
+
+
 
 
 

@@ -1,13 +1,16 @@
 package com.tutor.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tutor.entity.Apprise;
+import com.tutor.entity.Clazz;
 import com.tutor.mapper.AppriseMapper;
 import com.tutor.service.AppriseService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author : ZQL
@@ -33,6 +36,27 @@ public class AppriseServiceImpl  extends ServiceImpl<AppriseMapper, Apprise> imp
     public Apprise  selectAppriseByStudentId(Integer studentId){
        return baseMapper.selectOne(new QueryWrapper<Apprise>().eq("student_id",studentId));
 
+    }
+
+    /**
+     * @Author: ZhangQingMin
+     * 分页获取评价列表
+     * @param pageNum 分页页码
+     * @param pageSize 分页大小
+     * @return 返回评价list
+     */
+    @Override
+    public List<Apprise> getAppriseListByPage(Integer pageNum, Integer pageSize) {
+
+        // 分页查询 pageNum : 页码， pageSize ：一页数据条数
+        Page<Apprise> apprisePage = new Page<>(pageNum, pageSize);
+        // queryWrapper 查询条件，这里查询所有数据，不用做条件查询
+        apprisePage = baseMapper.selectPage(apprisePage, null);
+        // 获取page对象中的记录
+        List<Apprise> records = apprisePage.getRecords();
+
+        // 将记录返回
+        return records;
     }
 
 }
