@@ -42,6 +42,8 @@ public class AdminController {
     @Autowired
     private TeacherService teacherService;
 
+    //******************************************学生管理*********************************************
+
     /**
      * 获取学生分页列表
      *
@@ -55,6 +57,23 @@ public class AdminController {
         model.addAttribute("data", students);
         return "test";
     }
+
+    @PostMapping("/studentInsert")
+    public String studentInsert(@RequestBody Student entity, BindingResult result, RedirectAttributes attributes) {
+        return studentService.studentInsert(entity, result, attributes);
+    }
+
+    @PostMapping("/studentUpdate")
+    public String studentUpdate(@RequestBody Student entity, BindingResult result, RedirectAttributes attributes) {
+        return studentService.studentUpdate(entity, result, attributes);
+    }
+
+    @DeleteMapping("/studentDelete/{id}")
+    public String studentDelete(@PathVariable Integer id, RedirectAttributes attributes) {
+        return studentService.studentDelete(id, attributes);
+    }
+
+    //******************************************老师管理*********************************************
 
     /**
      * 获取老师分页列表
@@ -70,17 +89,30 @@ public class AdminController {
         return "test";
     }
 
+    @PostMapping("/teacherInsert")
+    public String teacherInsert(@RequestBody Teacher entity, BindingResult result, RedirectAttributes attributes) {
+        return teacherService.teacherInsert(entity, result, attributes);
+    }
+
+    @PostMapping("/teacherUpdate")
+    public String teacherUpdate(@RequestBody Teacher entity, BindingResult result, RedirectAttributes attributes) {
+        return teacherService.teacherUpdate(entity, result, attributes);
+    }
+
+    @DeleteMapping("/teacherDelete/{id}")
+    public String teacherDelete(@PathVariable Integer id, RedirectAttributes attributes) {
+        return teacherService.teacherDelete(id, attributes);
+    }
+
 
     // ******************************************班级管理********************************
 
     /**
-     *
+     * @param model   model数据传输对象
+     * @param pageNum 页码
+     * @return 控制器链接还没填
      * @description: 分页获取班级列表
      * @author: ZhangQingMin
-     * @param model model数据传输对象
-     * @param pageNum 页码
-     * @return
-     * 控制器链接还没填
      */
     @RequestMapping("/class_list")
     public String getClassList(Model model,
@@ -101,13 +133,12 @@ public class AdminController {
     }
 
     /**
-     *
-     * @description: 通过班级号查询班级列表
-     * @author: ZhangQingMin
-     * @param query 查询参数
-     * @param model 数据传输对象
+     * @param query   查询参数
+     * @param model   数据传输对象
      * @param pageNum 页码
      * @return
+     * @description: 通过班级号查询班级列表
+     * @author: ZhangQingMin
      */
     @PostMapping("/class_search")
     public String getClassListByCode(@RequestParam String query, Model model,
@@ -122,12 +153,11 @@ public class AdminController {
     }
 
     /**
-     *
-     * @description: 删除班级操作
-     * @author: ZhangQingMin
-     * @param id 班级id
+     * @param id         班级id
      * @param attributes 重定向参数，类似model
      * @return
+     * @description: 删除班级操作
+     * @author: ZhangQingMin
      */
     @GetMapping("/class_delete/{id}")
     public String deleteClassById(@PathVariable Long id, RedirectAttributes attributes) {
@@ -146,13 +176,12 @@ public class AdminController {
     }
 
     /**
-     *
-     * @description: 新增班级
-     * @author: ZhangQingMin
-     * @param clazz 前端传来的clazz对象
-     * @param result 用于处理clazz对象的数据校验对象
+     * @param clazz      前端传来的clazz对象
+     * @param result     用于处理clazz对象的数据校验对象
      * @param attributes 重定向参数
      * @return
+     * @description: 新增班级
+     * @author: ZhangQingMin
      */
     @PostMapping("/class_inset")
     public String insertClass(@Valid Clazz clazz, BindingResult result, RedirectAttributes attributes) {
@@ -189,14 +218,13 @@ public class AdminController {
     }
 
     /**
-     *
-     * @description: 更新班级信息
-     * @author: ZhangQingMin
-     * @param clazz 前端传来的班级信息
-     * @param result 用于处理clazz对象的数据校验对象
-     * @param id 携带的班级id
+     * @param clazz      前端传来的班级信息
+     * @param result     用于处理clazz对象的数据校验对象
+     * @param id         携带的班级id
      * @param attributes 重定向对象，相当于model
      * @return
+     * @description: 更新班级信息
+     * @author: ZhangQingMin
      */
     public String updateClass(@RequestBody @Valid Clazz clazz,
                               BindingResult result,
@@ -242,13 +270,14 @@ public class AdminController {
 
     /**
      * 分页获取评价信息
+     *
      * @param model
      * @param pageNum
      * @return
      */
     @RequestMapping("/apprise_list")
     public String getAppriseList(Model model,
-                               @RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum) {
+                                 @RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum) {
         // 调用Service层方法获取分页数据，pageNum : 分页页码, pageSize : 分页大小
         List<Apprise> records = appriseService.getAppriseListByPage(pageNum, 10);
         // 通过model将数据传送给前端
@@ -259,9 +288,6 @@ public class AdminController {
          */
         return "apprise_test";
     }
-
-
-
 
 
 }
