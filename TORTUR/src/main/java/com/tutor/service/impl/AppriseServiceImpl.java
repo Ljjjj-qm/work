@@ -8,6 +8,8 @@ import com.tutor.entity.Clazz;
 import com.tutor.mapper.AppriseMapper;
 import com.tutor.service.AppriseService;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -20,22 +22,46 @@ import java.util.List;
 @Service
 public class AppriseServiceImpl  extends ServiceImpl<AppriseMapper, Apprise> implements AppriseService {
 
-//    添加评价
+    /**
+     * @Author: ZengQingLong
+     * 学生对老师做出评价
+     * @param teacherId 老师id
+     * @param studentId 学生id
+     * @param apprise   学生评价对象
+     */
     @Override
-    public void  setApprisefortutor(Integer  teacherId,Integer studentId,Apprise apprise){
+    public String  setApprisefortutor(Integer  teacherId,Integer studentId, Apprise apprise,BindingResult result, RedirectAttributes attributes){
+        if (result.hasErrors()) {
+            return "test";
+        }
         apprise.setTutorId(teacherId);
         apprise.setStudentId(studentId);
         apprise.setAppriseTime(new Date());
         apprise.setReceived(0);
         apprise.setCompleted(0);
-        baseMapper.insert(apprise);
+        int insert = baseMapper.insert(apprise);
+        if (insert==1) {
+            attributes.addFlashAttribute("message", "添加评价成功");
+        } else {
+            attributes.addFlashAttribute("message", "添加评价失败");
+        }
+        return  "redirect: /apprise_list";
     }
 
-//    查看自己评价信息
+    /**
+     * @Author: ZengQingLong
+     * @param前端传入学生id
+     * @return 返回学生的评价
+     */
     @Override
-    public Apprise  selectAppriseByStudentId(Integer studentId){
-       return baseMapper.selectOne(new QueryWrapper<Apprise>().eq("student_id",studentId));
-
+    public String  selectAppriseByStudentId(Integer studentId, BindingResult result, RedirectAttributes attributes){
+       if(result.hasErrors()){
+           return  "test";
+       }
+        QueryWrapper<Apprise> wrapper = new QueryWrapper<Apprise>().eq("student_id", studentId);
+        Apprise apprise = baseMapper.selectOne(wrapper);
+        attributes.addAttribute("apprise",apprise);
+        return "redirect:/apprise_list";
     }
 
     /**
