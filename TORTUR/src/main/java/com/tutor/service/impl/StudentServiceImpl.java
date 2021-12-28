@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tutor.entity.Student;
 import com.tutor.entity.Teacher;
+import com.tutor.mapper.ClazzMapper;
 import com.tutor.mapper.StudentMapper;
+import com.tutor.mapper.TeacherMapper;
 import com.tutor.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,11 +24,36 @@ import java.util.List;
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements StudentService {
 
-    //    添加学生
+
+    @Autowired
+    private TeacherMapper teacherMapper;
+
+    @Autowired
+    private ClazzMapper clazzMapper;
+
+    /**
+     * @Author: ZengQingLong
+     * 添加学生个人信息
+     * @param teacherName 老师名字
+     * @param clazzCode 班级code
+     * @param student   学生对象
+     */
     @Override
-    public int inserOneStudent(Student student) {
-//         根据班级名称查询班级id  根据 辅导员姓名查询辅导员id
-        return baseMapper.insert(student);
+    public String insertOneStudent(Student student,String teacherName,String clazzCode
+                                       ,BindingResult result, RedirectAttributes attributes ) {
+        if (result.hasErrors()) {
+            return "test";
+        }
+        //         根据班级名称查询班级id  根据 辅导员姓名查询辅导员id
+        student.setTutorId(teacherMapper.selectTeacherIdByName(teacherName));
+        student.setClassId(clazzMapper.selectClazzIdByClazzCode(clazzCode));
+        int insert = baseMapper.insert(student);
+        if (insert==1){
+            attributes.addFlashAttribute("message","插入信息成功");
+        }else {
+            attributes.addFlashAttribute("message","插入信息失败");
+        }
+        return "redirect:/student_list";
     }
 
     //    删除学生

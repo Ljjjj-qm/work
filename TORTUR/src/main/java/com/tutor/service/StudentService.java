@@ -21,7 +21,7 @@ public interface StudentService extends IService<Student> {
     int updateStudent(Student student);
 
     //    添加学生
-    int inserOneStudent(Student student);
+    String insertOneStudent(Student student,String teacherName,String clazzCode,BindingResult result, RedirectAttributes attributes);
 
     //    删除学生
     int deleteStudentById(Integer id);
