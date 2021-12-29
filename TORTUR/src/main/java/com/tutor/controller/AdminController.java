@@ -42,6 +42,8 @@ public class AdminController {
     @Autowired
     private TeacherService teacherService;
 
+    //******************************************学生管理*********************************************
+
     /**
      * 获取学生分页列表
      *
@@ -56,6 +58,23 @@ public class AdminController {
         return "test";
     }
 
+    @PostMapping("/studentInsert")
+    public String studentInsert(@RequestBody Student entity, BindingResult result, RedirectAttributes attributes) {
+        return studentService.studentInsert(entity, result, attributes);
+    }
+
+    @PostMapping("/studentUpdate")
+    public String studentUpdate(@RequestBody Student entity, BindingResult result, RedirectAttributes attributes) {
+        return studentService.studentUpdate(entity, result, attributes);
+    }
+
+    @DeleteMapping("/studentDelete/{id}")
+    public String studentDelete(@PathVariable Integer id, RedirectAttributes attributes) {
+        return studentService.studentDelete(id, attributes);
+    }
+
+    //******************************************老师管理*********************************************
+
     /**
      * 获取老师分页列表
      *
@@ -68,6 +87,21 @@ public class AdminController {
         List<Teacher> teacherList = teacherService.getTeacherList(padeNum, 10);
         model.addAttribute("data", teacherList);
         return "test";
+    }
+
+    @PostMapping("/teacherInsert")
+    public String teacherInsert(@RequestBody Teacher entity, BindingResult result, RedirectAttributes attributes) {
+        return teacherService.teacherInsert(entity, result, attributes);
+    }
+
+    @PostMapping("/teacherUpdate")
+    public String teacherUpdate(@RequestBody Teacher entity, BindingResult result, RedirectAttributes attributes) {
+        return teacherService.teacherUpdate(entity, result, attributes);
+    }
+
+    @DeleteMapping("/teacherDelete/{id}")
+    public String teacherDelete(@PathVariable Integer id, RedirectAttributes attributes) {
+        return teacherService.teacherDelete(id, attributes);
     }
 
 
@@ -198,7 +232,6 @@ public class AdminController {
      * @param attributes 重定向对象，相当于model
      * @return
      */
-    @PostMapping("/class_update")
     public String updateClass(@RequestBody @Valid Clazz clazz,
                               BindingResult result,
                               @PathVariable("id") Long id,
@@ -229,9 +262,9 @@ public class AdminController {
 
         if (b) {
             // 保存成功，返回信息
-            attributes.addFlashAttribute("message", "更新成功");
+            attributes.addFlashAttribute("message", "新增成功");
         } else {
-            attributes.addFlashAttribute("message", "更新失败");
+            attributes.addFlashAttribute("message", "新增失败");
         }
 
         // 保存成功后，重定向到 /admin/class_list

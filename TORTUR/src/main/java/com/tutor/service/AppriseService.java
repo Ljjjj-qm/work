@@ -2,6 +2,8 @@ package com.tutor.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tutor.entity.Apprise;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -13,10 +15,10 @@ import java.util.List;
 public interface AppriseService extends IService<Apprise> {
 
     //    添加评价
-    void  setApprisefortutor(Integer  teacherId,Integer studentId,Apprise apprise);
+    String  setApprisefortutor(Integer  teacherId,Integer studentId, Apprise apprise,BindingResult result, RedirectAttributes attributes);
 
     //    查看自己评价信息
-    Apprise  selectAppriseByStudentId(Integer studentId);
+    String  selectAppriseByStudentId(Integer studentId, BindingResult result, RedirectAttributes attributes);
 
     /**
      *

@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ClazzMapper extends BaseMapper<Clazz> {
+    Integer selectClazzIdByClazzCode(String clazzName);
 }
