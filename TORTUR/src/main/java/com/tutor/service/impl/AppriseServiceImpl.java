@@ -59,4 +59,52 @@ public class AppriseServiceImpl  extends ServiceImpl<AppriseMapper, Apprise> imp
         return records;
     }
 
+    /**
+     *
+     * @Author ZhangQingMin
+     * @param query 辅导员id
+     * @param pageNum 分页页码
+     * @param pageSize 分页大小
+     * @return
+     */
+    @Override
+    public List<Apprise> getAppriseListByTutorId(Integer query, Integer pageNum, Integer pageSize) {
+        // 分页查询 pageNum : 当前页， pageSize ：一页数据条数
+        Page<Apprise> apprisePage = new Page<>(pageNum, pageSize);
+        // queryWrapper 设置查询条件，这里根据query查询
+        QueryWrapper<Apprise> clazzQueryWrapper = new QueryWrapper<>();
+
+        clazzQueryWrapper.eq("tutor_id", query);
+
+        // 使用bashMapper 分页查询，apprisePage: 分页参数，clazzQueryWrapper: 查询参数
+        apprisePage = baseMapper.selectPage(apprisePage, clazzQueryWrapper);
+
+        // 将查询出的记录返回
+        return apprisePage.getRecords();
+    }
+
+    /**
+     *
+     * @Author ZhangQingMin
+     * @param query 辅导员id
+     * @param pageNum 分页页码
+     * @param pageSize 分页大小
+     * @return
+     */
+    @Override
+    public List<Apprise> getAppriseListByStudentId(Integer query, Integer pageNum, Integer pageSize) {
+        // 分页查询 pageNum : 当前页， pageSize ：一页数据条数
+        Page<Apprise> apprisePage = new Page<>(pageNum, pageSize);
+        // queryWrapper 设置查询条件，这里根据query查询
+        QueryWrapper<Apprise> clazzQueryWrapper = new QueryWrapper<>();
+
+        clazzQueryWrapper.eq("student_id", query);
+
+        // 使用bashMapper 分页查询，apprisePage: 分页参数，clazzQueryWrapper: 查询参数
+        apprisePage = baseMapper.selectPage(apprisePage, clazzQueryWrapper);
+
+        // 将查询出的记录返回
+        return apprisePage.getRecords();
+    }
+
 }

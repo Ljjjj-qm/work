@@ -198,6 +198,7 @@ public class AdminController {
      * @param attributes 重定向对象，相当于model
      * @return
      */
+    @PostMapping("/class_update")
     public String updateClass(@RequestBody @Valid Clazz clazz,
                               BindingResult result,
                               @PathVariable("id") Long id,
@@ -228,9 +229,9 @@ public class AdminController {
 
         if (b) {
             // 保存成功，返回信息
-            attributes.addFlashAttribute("message", "新增成功");
+            attributes.addFlashAttribute("message", "更新成功");
         } else {
-            attributes.addFlashAttribute("message", "新增失败");
+            attributes.addFlashAttribute("message", "更新失败");
         }
 
         // 保存成功后，重定向到 /admin/class_list
@@ -260,8 +261,81 @@ public class AdminController {
         return "apprise_test";
     }
 
+    /**
+     *
+     * @description: 查询某个辅导员的评论信息列表
+     * @author: ZhangQingMin
+     * @param query 查询参数
+     * @param model 数据传输对象
+     * @param pageNum 页码
+     * @return
+     */
+    @PostMapping("/apprise_search_tutor")
+    public String getAppriseListByTutorId(@RequestParam Integer query, Model model,
+                                     @RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum) {
+
+        // 调用Service层搜索数据
+        List<Apprise> appriseList = appriseService.getAppriseListByTutorId(query, pageNum, 10);
+
+        // 使用model将数据传送给前端，message与前端的 <div th:text="${message}"></div> 相对应
+        model.addAttribute("message", appriseList);
+        // 调用成功后返回到template下的test.html页面
+        return "test";
+    }
+
+    /**
+     *
+     * @description: 查询某个学生的评论信息列表
+     * @author: ZhangQingMin
+     * @param query 查询参数
+     * @param model 数据传输对象
+     * @param pageNum 页码
+     * @return
+     */
+    @PostMapping("/apprise_search_student")
+    public String getAppriseListByStudentId(@RequestParam Integer query, Model model,
+                                          @RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum) {
+
+        // 调用Service层搜索数据
+        List<Apprise> appriseList = appriseService.getAppriseListByStudentId(query, pageNum, 10);
+
+        // 使用model将数据传送给前端，message与前端的 <div th:text="${message}"></div> 相对应
+        model.addAttribute("message", appriseList);
+        // 调用成功后返回到template下的test.html页面
+        return "test";
+    }
 
 
+    /**
+     *
+     * @description: 更新评价信息
+     * @author: ZhangQingMin
+     * @param apprise 前端传来的评价对象
+     * @param result 用于处理apprise对象的数据校验对象
+     * @param id 携带的班级id
+     * @param attributes 重定向对象，相当于model
+     * @return
+     */
+    @PostMapping("/apprise_update")
+    public String updateApprise(@RequestBody @Valid Apprise apprise,
+                              BindingResult result,
+                              @PathVariable("id") Long id,
+                              RedirectAttributes attributes) {
+
+
+        // 调用Service层更新该id的评价信息
+        boolean b = appriseService.update(apprise, new UpdateWrapper<Apprise>().eq("id", id));
+
+        if (b) {
+            // 保存成功，返回信息
+            attributes.addFlashAttribute("message", "更新成功");
+        } else {
+            attributes.addFlashAttribute("message", "更新失败");
+        }
+
+        // 保存成功后，重定向到 /admin/apprise_list
+        return "redirect:/admin/apprise_list";
+    }
 
 
 }

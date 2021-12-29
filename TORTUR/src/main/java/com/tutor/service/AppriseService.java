@@ -19,6 +19,7 @@ public interface AppriseService extends IService<Apprise> {
     Apprise  selectAppriseByStudentId(Integer studentId);
 
     /**
+     *
      * @Author: ZhangQingMin
      * 分页获取评价列表
      * @param pageNum 分页页码
@@ -26,4 +27,24 @@ public interface AppriseService extends IService<Apprise> {
      * @return
      */
     List<Apprise> getAppriseListByPage(Integer pageNum, Integer pageSize);
+
+    /**
+     *
+     * @Author ZhangQingMin
+     * @param query 辅导员id
+     * @param pageNum 分页页码
+     * @param pageSize 分页大小
+     * @return
+     */
+    List<Apprise> getAppriseListByTutorId(Integer query, Integer pageNum, Integer pageSize);
+
+    /**
+     *
+     * @Author ZhangQingMin
+     * @param query 辅导员id
+     * @param pageNum 分页页码
+     * @param pageSize 分页大小
+     * @return
+     */
+    List<Apprise> getAppriseListByStudentId(Integer query, Integer pageNum, Integer pageSize);
 }
