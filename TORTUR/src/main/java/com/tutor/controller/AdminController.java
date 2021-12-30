@@ -2,14 +2,8 @@ package com.tutor.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.tutor.entity.Apprise;
-import com.tutor.entity.Clazz;
-import com.tutor.entity.Student;
-import com.tutor.entity.Teacher;
-import com.tutor.service.AppriseService;
-import com.tutor.service.ClazzService;
-import com.tutor.service.StudentService;
-import com.tutor.service.TeacherService;
+import com.tutor.entity.*;
+import com.tutor.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +35,9 @@ public class AdminController {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private CollegeService collegeService;
 
     //******************************************学生管理*********************************************
 
@@ -370,5 +367,28 @@ public class AdminController {
         return "redirect:/admin/apprise_list";
     }
 
+
+    //*********************************分院管理********************************************
+    @RequestMapping("/college_list")
+    public String getCollegeList(Model model, @RequestParam(defaultValue = "1", value = "padeNum") Integer padeNum) {
+        List<College> Colleges = collegeService.getCollegeList(padeNum, 10);
+        model.addAttribute("data", Colleges);
+        return "test";
+    }
+
+    @PostMapping("/collegeInsert")
+    public String collegeInsert(@RequestBody College entity, BindingResult result, RedirectAttributes attributes) {
+        return collegeService.collegeInsert(entity, result, attributes);
+    }
+
+    @PostMapping("/collegeUpdate")
+    public String collegeUpdate(@RequestBody College entity, BindingResult result, RedirectAttributes attributes) {
+        return collegeService.collegeUpdate(entity, result, attributes);
+    }
+
+    @DeleteMapping("/collegeDelete/{id}")
+    public String collegeDelete(@PathVariable Integer id, RedirectAttributes attributes) {
+        return collegeService.collegeDelete(id, attributes);
+    }
 
 }
